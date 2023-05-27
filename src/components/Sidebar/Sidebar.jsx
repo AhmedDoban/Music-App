@@ -7,24 +7,26 @@ import axios from "axios";
 
 function Sidebar(props) {
   const [img, SetImg] = useState(require("../../assets/img/avatar.jpg"));
-  const [Token, SetToken] = useState("");
+
   useEffect(() => {
-    const LoaclToken = localStorage.getItem("Token");
-    SetToken(LoaclToken);
     const GetUSer = async () => {
-      if (Token) {
+      if (props.Token) {
         await axios
           .get("https://api.spotify.com/v1/me", {
             headers: {
-              Authorization: "Bearer " + Token,
+              Authorization: "Bearer " + props.Token,
             },
           })
           .then((data) => SetImg(data.data.images[0].url));
       }
     };
     GetUSer();
-  }, [Token]);
+  }, [props.Token]);
 
+  const HandleLogout = () => {
+    localStorage.clear();
+    props.SetToken("");
+  };
   return (
     <React.Fragment>
       <div className={`Sidebar ${props.active}`}>
@@ -63,7 +65,7 @@ function Sidebar(props) {
           </li>
         </ul>
         <div className="setting">
-          <Link to="/">
+          <Link to="/" onClick={() => HandleLogout()}>
             <i className="fa-solid fa-right-from-bracket"></i>
             <span>Logout</span>
           </Link>

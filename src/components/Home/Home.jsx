@@ -1,10 +1,4 @@
-import React, {
-  Suspense,
-  lazy,
-  useEffect,
-  useState,
-  createContext,
-} from "react";
+import React, { Suspense, lazy, useEffect, useState } from "react";
 import Sidebar from "../Sidebar/Sidebar";
 import "./Home.css";
 import { Route, Routes } from "react-router-dom";
@@ -42,7 +36,7 @@ function Home() {
           <i className="fa-solid fa-bars"></i>
         </div>
 
-        <Sidebar active={active} />
+        <Sidebar active={active} SetToken={SetToken} Token={Token} />
         <div className={`content ${active}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
