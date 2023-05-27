@@ -1,0 +1,44 @@
+/**************************************************
+# root
+***************************************************/
+@import url("./../../assets/css/root.css");
+
+/**************************************************
+# Home
+***************************************************/
+.home {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  display: flex;
+  background-color: var(--main-color);
+}
+.home .content {
+  position: relative;
+  background-color: var(--dark-color);
+  width: 100%;
+  border-top-left-radius: var(--main-border-radius);
+  border-bottom-left-radius: var(--main-border-radius);
+  transition: var(--main-transition);
+  padding: 20px;
+}
+.home .togle {
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  background-color: var(--main-color);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: calc(var(--main-border-radius) / 4);
+  color: var(--white-color);
+  z-index: 999;
+  right: 15px;
+  top: 15px;
+}
+.home .content.active {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

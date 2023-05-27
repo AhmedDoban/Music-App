@@ -1,0 +1,120 @@
+/**************************************************
+# root
+***************************************************/
+@import url("./../../assets/css/root.css");
+
+/**************************************************
+# Sidebar
+***************************************************/
+.Sidebar {
+  position: relative;
+  min-width: 100px;
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  gap: 10px;
+  transition: var(--main-transition);
+}
+.Sidebar.active {
+  max-width: 0;
+  min-width: 0;
+  padding: 20px 0px;
+}
+@media (max-width: 772px) {
+  .Sidebar {
+    min-width: 60px;
+  }
+}
+/**************************************************
+# Sidebar avatar
+***************************************************/
+.Sidebar .avatar {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: calc(var(--main-border-radius) / 2);
+  overflow: hidden;
+  transition: var(--main-transition);
+}
+.Sidebar .avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: var(--main-transition);
+}
+@media (max-width: 772px) {
+  .Sidebar .avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
+/**************************************************
+# Sidebar navigators
+***************************************************/
+.Sidebar .navigators,
+.Sidebar .setting {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  transition: var(--main-transition);
+}
+.Sidebar .navigators li a,
+.Sidebar .setting a {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  color: #f8d9c0;
+  border-radius: calc(var(--main-border-radius) / 2);
+  transition: var(--main-transition);
+}
+@media (max-width: 772px) {
+  .Sidebar .navigators li a,
+  .Sidebar .setting a {
+    width: 40px;
+    height: 40px;
+    border-radius: calc(var(--main-border-radius) / 4);
+  }
+}
+.Sidebar .navigators li a span,
+.Sidebar .setting a span {
+  font-size: 12px;
+  font-weight: 600;
+}
+@media (max-width: 772px) {
+  .Sidebar .navigators li a span,
+  .Sidebar .setting a span {
+    font-size: 8px;
+  }
+}
+.Sidebar .navigators li a i,
+.Sidebar .navigators li a svg,
+.Sidebar .setting a i {
+  font-size: 25px;
+}
+@media (max-width: 772px) {
+  .Sidebar .navigators li a i,
+  .Sidebar .navigators li a svg,
+  .Sidebar .setting a i {
+    font-size: 14px;
+  }
+}
+.Sidebar .navigators li a.active,
+.Sidebar .navigators li a:hover,
+.Sidebar .setting a.active,
+.Sidebar .setting a:hover {
+  background-color: rgba(244, 187, 146, 1);
+  color: var(--white-color);
+  transform: scale(1.05);
+}
