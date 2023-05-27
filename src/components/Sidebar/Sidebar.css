@@ -22,6 +22,7 @@
   max-width: 0;
   min-width: 0;
   padding: 20px 0px;
+  transition: var(--main-transition);
 }
 @media (max-width: 772px) {
   .Sidebar {

@@ -1,9 +1,9 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
-import Sidebar from "../Sidebar/Sidebar";
 import "./Home.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "../Login/Login";
 
+import Login from "../Login/Login";
+import Sidebar from "../Sidebar/Sidebar";
 const Library = lazy(() => import("./../Library/Library"));
 const Feed = lazy(() => import("./../Feed/Feed"));
 const Trending = lazy(() => import("./../Trending/Trending"));
@@ -40,11 +40,10 @@ function Home() {
         <div className={`content ${active}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route path="/" element={<Library />} />
-              <Route path="/Feed" element={<Feed />} />
-              <Route path="/Trending" element={<Trending />} />
-              <Route path="/Player" element={<MusicPlayer />} />
-              <Route path="/Favorites" element={<Favorites />} />
+              <Route path="/" element={<Library Token={Token} />} />
+              <Route path="/Feed" element={<Feed Token={Token} />} />
+              <Route path="/Trending" element={<Trending Token={Token} />} />
+              <Route path="/Player" element={<MusicPlayer Token={Token} />} />
               <Route path="/Favorites" element={<Favorites />} />
             </Routes>
           </Suspense>

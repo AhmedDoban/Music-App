@@ -16,12 +16,20 @@
 }
 .home .content {
   position: relative;
-  background-color: var(--dark-color);
+
   width: 100%;
   border-top-left-radius: var(--main-border-radius);
   border-bottom-left-radius: var(--main-border-radius);
   transition: var(--main-transition);
   padding: 20px;
+
+  background-color: var(--dark-color);
+  background-image: repeating-radial-gradient(
+      circle at top left,
+      transparent 0,
+      #233656 80px
+    ),
+    repeating-linear-gradient(#1e2a3e55, #1e2a3e);
 }
 .home .togle {
   position: absolute;
