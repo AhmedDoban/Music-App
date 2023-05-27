@@ -9,7 +9,6 @@ import Sidebar from "../Sidebar/Sidebar";
 import "./Home.css";
 import { Route, Routes } from "react-router-dom";
 import Login from "../Login/Login";
-import axios from "axios";
 
 const Library = lazy(() => import("./../Library/Library"));
 const Feed = lazy(() => import("./../Feed/Feed"));

@@ -6,7 +6,7 @@ import { IoLibrarySharp } from "react-icons/io5";
 import axios from "axios";
 
 function Sidebar(props) {
-  const [img, SetImg] = useState(require("../../img/avatar.jpg"));
+  const [img, SetImg] = useState(require("../../assets/img/avatar.jpg"));
   const [Token, SetToken] = useState("");
   useEffect(() => {
     const LoaclToken = localStorage.getItem("Token");
