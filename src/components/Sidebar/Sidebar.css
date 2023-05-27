@@ -7,13 +7,16 @@
 # Sidebar
 ***************************************************/
 .Sidebar {
-  position: relative;
+  position: sticky;
+  top: 0;
   min-width: 100px;
+  height: 100vh;
   padding: 20px 10px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  align-self: flex-start;
   overflow: hidden;
   gap: 10px;
   transition: var(--main-transition);
@@ -22,7 +25,6 @@
   max-width: 0;
   min-width: 0;
   padding: 20px 0px;
-  transition: var(--main-transition);
 }
 @media (max-width: 772px) {
   .Sidebar {

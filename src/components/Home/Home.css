@@ -10,13 +10,11 @@
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow: hidden;
   display: flex;
   background-color: var(--main-color);
 }
 .home .content {
   position: relative;
-
   width: 100%;
   border-top-left-radius: var(--main-border-radius);
   border-bottom-left-radius: var(--main-border-radius);

@@ -44,7 +44,7 @@ function Home() {
               <Route path="/Feed" element={<Feed Token={Token} />} />
               <Route path="/Trending" element={<Trending Token={Token} />} />
               <Route path="/Player" element={<MusicPlayer Token={Token} />} />
-              <Route path="/Favorites" element={<Favorites />} />
+              <Route path="/Favorites" element={<Favorites Token={Token} />} />
             </Routes>
           </Suspense>
         </div>

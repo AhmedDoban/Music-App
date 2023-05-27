@@ -1,0 +1,195 @@
+/**************************************************
+# root
+***************************************************/
+@import url("./../../assets/css/root.css");
+/**************************************************
+# MusicPlayer
+***************************************************/
+.MusicPlayer {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+@media (max-width: 1020px) {
+  .MusicPlayer {
+    flex-direction: column;
+  }
+}
+/**************************************************
+# MusicPlayer left
+***************************************************/
+.MusicPlayer .left {
+  position: relative;
+  width: 75%;
+}
+
+/**************************************************
+# MusicPlayer right 
+***************************************************/
+.MusicPlayer .right {
+  width: 25%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+@media (max-width: 1020px) {
+  .MusicPlayer .left,
+  .MusicPlayer .right {
+    width: 100%;
+  }
+}
+/**************************************************
+# MusicPlayer right SongCard
+***************************************************/
+.MusicPlayer .right .SongCard {
+  position: relative;
+  width: 100%;
+  background-color: #27354d84;
+  backdrop-filter: blur(14px);
+  height: auto;
+  min-height: auto;
+  padding: 10px;
+  border-radius: var(--main-border-radius);
+  transition: var(--main-transition);
+}
+.MusicPlayer .right .SongCard .SongCard-img {
+  position: relative;
+  padding: 20px;
+  backdrop-filter: blur(14px);
+}
+
+.MusicPlayer .right .SongCard img {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border-radius: calc(var(--main-border-radius) / 4);
+  transition: var(--main-transition);
+}
+.MusicPlayer .right .SongCard .SongCard-img > img:nth-child(1) {
+  width: 90%;
+  height: 90%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1.05);
+  left: 50%;
+  filter: blur(14px);
+}
+.MusicPlayer .right .SongCard .data {
+  position: relative;
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: hidden;
+}
+.MusicPlayer .right .SongCard .data .titel {
+  width: 500px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  color: var(--white-alt-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.MusicPlayer .right .SongCard .data .titel h5 {
+  position: relative;
+  width: 100%;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-overflow: ellipsis;
+  animation: marque 15s infinite ease-in-out;
+}
+@keyframes marque {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+.MusicPlayer .right .SongCard .data .titel span {
+  position: relative;
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+}
+.MusicPlayer .right .SongCard .data p {
+  display: flex;
+  font-size: 14px;
+  color: var(--white-alt-color);
+  font-weight: 400;
+}
+.MusicPlayer .right .SongCard .data p.release_date {
+  font-size: 12px;
+}
+/**************************************************
+# MusicPlayer right Queue
+***************************************************/
+.MusicPlayer .right .Queue {
+  position: relative;
+  width: 100%;
+  height: 245px;
+  padding: 20px;
+  background-color: #3e61d2;
+  background-image: repeating-radial-gradient(
+      circle at 0 0,
+      transparent 0,
+      #3e61d2 40px
+    ),
+    repeating-linear-gradient(#4767d055, #4767d0);
+  border-radius: var(--main-border-radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+.MusicPlayer .right .Queue > p {
+  position: relative;
+  font-size: 18px;
+  color: var(--white-color);
+  font-weight: 700;
+  text-align: left;
+  width: 100%;
+}
+.MusicPlayer .right .Queue .Queue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  overflow: hidden;
+  overflow-y: scroll;
+  height: 100%;
+  width: 100%;
+}
+.MusicPlayer .right .Queue .Queue-list::-webkit-scrollbar-thumb,
+.MusicPlayer .right .Queue .Queue-list::-webkit-slider-thumb,
+.MusicPlayer .right .Queue .Queue-list::-webkit-scrollbar-track {
+  background-color: transparent;
+  width: 10px;
+  cursor: pointer;
+}
+.MusicPlayer .right .Queue .Queue-list p {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--black-color);
+  text-overflow: ellipsis;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--white-alt-color);
+  width: 100%;
+  cursor: pointer;
+  transition: var(--main-transition);
+  border-radius: calc(var(--main-border-radius) / 4);
+  padding: 5px;
+}
+.MusicPlayer .right .Queue .Queue-list p:hover {
+  background-color: rgba(240, 248, 255, 0.1);
+}
