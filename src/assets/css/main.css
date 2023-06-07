@@ -43,31 +43,11 @@ p {
   font-weight: 400;
 }
 /*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
-# container
+# App
 ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
-.container {
-  padding-left: 15px;
-  padding-right: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
-/*Mobile Screen*/
-@media (min-width: 768px) {
-  .container {
-    width: 750px;
-  }
-}
-/*Tab Screen*/
-@media (min-width: 992px) {
-  .container {
-    width: 970px;
-  }
-}
-/*PC Screen*/
-@media (min-width: 1200px) {
-  .container {
-    width: 1170px;
-  }
+.App {
+  position: relative;
+  width: 100%;
 }
 /*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # Scroll bar

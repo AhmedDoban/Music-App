@@ -1,53 +1,190 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
 import "./Player.css";
-import axios from "axios";
+import { CircularProgressbarWithChildren } from "react-circular-progressbar";
+import { tracks } from "../../Tracks";
+import { useParams } from "react-router-dom";
+import Controlls from "./Controlls";
+import Widgets from "./widgets/Widgets";
 
 function MusicPlayer(props) {
-  const location = useLocation();
+  const params = useParams();
+  // State
+  const [trackIndex, setTrackIndex] = useState(3);
+  const [trackProgress, setTrackProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const { title, artist, image, audioSrc } = tracks[trackIndex];
 
-  const [Tracks, SetTracks] = useState([]);
-  const [CurrentTracks, SetCurrentTracks] = useState({});
-  const [CurrentTracksImg, SetCurrentTracksImg] = useState("");
-  const [TrackIndex, SetTrackIndex] = useState(0);
+  // Refs
+  const audioRef = useRef(new Audio(audioSrc));
+  const intervalRef = useRef();
+  const isReady = useRef(false);
+  const { duration } = audioRef.current;
+  const sliderEl = useRef();
 
   useEffect(() => {
-    if (location.state) {
-      const GetUSer = async () => {
-        if (props.Token) {
-          await axios
-            .get(
-              `https://api.spotify.com/v1/playlists/${location.state.id}/tracks`,
-              {
-                headers: {
-                  Authorization: "Bearer " + props.Token,
-                },
-              }
-            )
-            .then((data) => {
-              SetTracks(data.data.items);
-              SetCurrentTracks(data.data?.items[0].track);
-              SetCurrentTracksImg(
-                data.data?.items[0].track.album?.images[0].url
-              );
-            });
-        }
-      };
-      GetUSer();
+    if (params.id) {
+      setTrackIndex(params.id);
     }
-  }, [props.Token, location.state]);
+  }, [params.id]);
 
-  const HandleChange = (index) => {
-    SetTrackIndex(index);
-    SetCurrentTracks(Tracks[index]?.track);
-    SetCurrentTracksImg(Tracks[index]?.track.album?.images[0].url);
+  const startTimer = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = setInterval(() => {
+      if (audioRef.current.ended) {
+        toNextTrack();
+        sliderEl.current.style.background = `linear-gradient(to right, #f50 ${0}%, #ccc ${0}%)`;
+      } else {
+        setTrackProgress(audioRef.current.currentTime);
+        sliderEl.current.style.background = `linear-gradient(to right, #f50 ${
+          (trackProgress / duration) * 100
+        }%, #ccc ${(trackProgress / duration) * 100}%)`;
+      }
+    }, [1000]);
   };
+
+  const onScrub = (value) => {
+    clearInterval(intervalRef.current);
+    audioRef.current.currentTime = value;
+    setTrackProgress(audioRef.current.currentTime);
+    sliderEl.current.style.background = `linear-gradient(to right, #f50 ${
+      (trackProgress / duration) * 100
+    }%, #ccc ${(trackProgress / duration) * 100}%)`;
+  };
+
+  const onScrubEnd = () => {
+    if (!isPlaying) {
+      setIsPlaying(true);
+    }
+    startTimer();
+  };
+
+  const toPrevTrack = () => {
+    if (trackIndex - 1 < 0) {
+      setTrackIndex(tracks.length - 1);
+    } else {
+      setTrackIndex(trackIndex - 1);
+    }
+  };
+
+  const toNextTrack = () => {
+    if (trackIndex < tracks.length - 1) {
+      setTrackIndex(trackIndex + 1);
+    } else {
+      setTrackIndex(0);
+    }
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current.play();
+      startTimer();
+      sliderEl.current.style.background = `linear-gradient(to right, #f50 ${
+        (trackProgress / duration) * 100
+      }%, #ccc ${(trackProgress / duration) * 100}%)`;
+    } else {
+      audioRef.current.pause();
+    }
+  }, [isPlaying, duration ,startTimer]);
+
+  useEffect(() => {
+    audioRef.current.pause();
+    audioRef.current = new Audio(audioSrc);
+    setTrackProgress(audioRef.current.currentTime);
+
+    if (isReady.current) {
+      audioRef.current.play();
+      setIsPlaying(true);
+      startTimer();
+      sliderEl.current.style.background = `linear-gradient(to right, #f50 ${
+        (trackProgress / duration) * 100
+      }%, #ccc ${(trackProgress / duration) * 100}%)`;
+    } else {
+      isReady.current = true;
+    }
+  }, [trackIndex]);
+
+  useEffect(() => {
+    return () => {
+      audioRef.current.pause();
+      clearInterval(intervalRef.current);
+    };
+  }, []);
 
   return (
     <React.Fragment>
       <div className="MusicPlayer">
         {/******************** Left Data ****************************/}
-        <div className="left"></div>
+        <div className="left">
+          <div className="top">
+            <div className="CircularProgressbar">
+              <CircularProgressbarWithChildren
+                value={duration ? `${(trackProgress / duration) * 100}` : "0"}
+                circleRatio={0.95}
+                styles={{
+                  trail: {
+                    strokeLinecap: "round",
+                    transform: "rotate(-220deg)",
+                    transformOrigin: "center center",
+                  },
+                  path: {
+                    strokeLinecap: "round",
+                    transform: "rotate(-220deg)",
+                    transformOrigin: "center center",
+                  },
+                }}
+              >
+                <div className="data">
+                  <img
+                    src="https://pngimg.com/uploads/vinyl/vinyl_PNG107.png"
+                    alt="disk"
+                    className={isPlaying ? "active" : "null"}
+                  />
+                  <img
+                    src={image}
+                    alt="soundImg"
+                    className={isPlaying ? "active" : "null"}
+                  />
+                </div>
+              </CircularProgressbarWithChildren>
+            </div>
+            <div className="Song-body">
+              <div className="titel"> {title}</div>
+              <div className="artists">
+                <span>{artist} </span>
+              </div>
+              <div className="song-duration">
+                <p className="duration">0:00</p>
+                <div className="wave">
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                  <div className={`box ${isPlaying ? "active" : null}`}></div>
+                </div>
+                <p className="duration">
+                  {duration
+                    ? (duration / 60).toFixed(2).replace(".", " : ")
+                    : "loading"}
+                </p>
+              </div>
+              <Controlls
+                setIsPlaying={setIsPlaying}
+                isPlaying={isPlaying}
+                toNextTrack={toNextTrack}
+                toPrevTrack={toPrevTrack}
+              />
+            </div>
+          </div>
+          <div className="bottom">
+            <Widgets />
+          </div>
+        </div>
         {/******************** End Left Data ****************************/}
 
         {/******************** Right Data ****************************/}
@@ -55,36 +192,43 @@ function MusicPlayer(props) {
           {/******************** Right Data cards ****************************/}
           <div className="SongCard">
             <div className="SongCard-img">
-              <img src={CurrentTracksImg} alt="" />
-              <img src={CurrentTracksImg} alt="" />
+              <img src={image} alt="" />
+              <img src={image} alt="" />
+            </div>
+            <div className="data">
+              <input
+                type="range"
+                value={trackProgress}
+                size="small"
+                min={0}
+                step={1}
+                max={duration ? duration : `${duration}`}
+                onChange={(e) => onScrub(e.target.value)}
+                onMouseUp={onScrubEnd}
+                onKeyUp={onScrubEnd}
+                className="rangeStyle"
+                ref={sliderEl}
+              />
             </div>
             <div className="data">
               <div className="titel">
-                <h5>{CurrentTracks.album?.name}</h5>
-                {CurrentTracks.album?.artists.map((ar) => (
-                  <span>- {ar.name}</span>
-                ))}
+                <h5>{title}</h5>
+                <span>{artist}</span>
               </div>
-
-              <p>
-                {CurrentTracks.album?.name} is an{" "}
-                {CurrentTracks.album?.album_type} with{" "}
-                {CurrentTracks.album?.total_tracks}
-              </p>
-              <p className="release_date">
-                Release Date : {CurrentTracks.album?.release_date}
-              </p>
+              <p className="release_date">Release Date : 2019</p>
             </div>
           </div>
           <div className="Queue">
             <p>Up Next</p>
             <div className="Queue-list">
-              {Tracks.map((List, index) => (
-                <p onClick={() => HandleChange(index)} key={index}>
-                  <span>{List.track.name}</span>
-                  <span>
-                    {(List.track.duration_ms / (1000 * 60)).toFixed(2)}
-                  </span>
+              {tracks.map((List, index) => (
+                <p
+                  onClick={() => setTrackIndex(index)}
+                  key={index}
+                  className={index === trackIndex ? "active" : ""}
+                >
+                  <span>{List.title}</span>
+                  <span>{List.duration}</span>
                 </p>
               ))}
             </div>

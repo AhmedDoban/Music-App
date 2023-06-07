@@ -2,7 +2,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Login.css";
 
-function Login() {
+function Login(props) {
+  const HandleLogin = () => {
+    localStorage.setItem("Token", true);
+    props.SetToken(true);
+  };
   return (
     <React.Fragment>
       <div className="login">
@@ -12,9 +16,7 @@ function Login() {
             alt="logo-spotify"
             className="logo"
           />
-          <Link
-            to={`${process.env.REACT_APP_AUTH_END_POINT}client_id=${process.env.REACT_APP_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_REDIRECT_URL}&scope=${process.env.REACT_APP_SCOPES}&response_type=token&show_dialog=true`}
-          >
+          <Link to={`/`} onClick={() => HandleLogin()}>
             <div className="login-btn">LOG IN</div>
           </Link>
         </div>

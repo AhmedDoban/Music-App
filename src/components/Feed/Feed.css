@@ -1,0 +1,85 @@
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+# root
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
+@import url("./../../assets/css/root.css");
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+# Feed
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
+.Feed {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+}
+.Feed .card {
+  position: relative;
+  width: 100%;
+  height: fit-content;
+  border: 1px solid rgba(54, 69, 98, 0.18);
+  background: rgb(30, 42, 62);
+  background: linear-gradient(
+    75deg,
+    rgb(40, 58, 88) 0%,
+    rgba(54, 69, 98, 0) 100%
+  );
+  border-radius: 15px;
+  padding: 10px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: var(--main-transition);
+}
+
+.Feed .card:hover {
+  transform: scale(1.02);
+}
+.Feed .card img {
+  width: 100%;
+  height: 250px;
+  border-radius: calc(var(--main-border-radius) / 4);
+  object-fit: cover;
+}
+.Feed .card .title {
+  position: relative;
+  font-weight: 800;
+  font-size: 16px;
+  color: #c4d0e3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.Feed .card .subtitle {
+  font-weight: 400;
+  font-size: 16px;
+  color: #c4d0e37c;
+}
+
+.Feed .card .fade {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(54, 69, 98, 0) 10%,
+    rgba(54, 69, 98, 1) 100%
+  );
+  top: 0;
+  right: 0;
+  transform-origin: center center;
+  padding: 15px;
+  transition: var(--main-transition);
+  opacity: 0;
+}
+.Feed .card .fade svg {
+  position: absolute;
+  bottom: 15px;
+  right: 15px;
+  width: fit-content;
+  opacity: 0;
+  transition: var(--main-transition);
+}
+.Feed .card:hover .fade svg,
+.Feed .card:hover .fade {
+  opacity: 1;
+  fill: #ff0000;
+}

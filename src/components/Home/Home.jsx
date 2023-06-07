@@ -10,23 +10,17 @@ const Trending = lazy(() => import("./../Trending/Trending"));
 const MusicPlayer = lazy(() => import("./../Player/Player"));
 const Favorites = lazy(() => import("./../Favorites/Favorites"));
 
-function Home() {
+function Home(props) {
   const [active, SetActive] = useState("");
-  const [Token, SetToken] = useState("");
 
   useEffect(() => {
-    const Hash = window.location.hash;
     const LoaclToken = localStorage.getItem("Token");
-    window.location.hash = "";
-    if (!LoaclToken && Hash) {
-      localStorage.setItem("Token", Hash.split("&")[0].split("=")[1]);
-      SetToken(Hash.split("&")[0].split("=")[1]);
-    } else {
-      SetToken(LoaclToken);
+    if (LoaclToken !== null) {
+      props.SetToken(LoaclToken);
     }
-  }, [Token]);
+  }, [props.Token]);
 
-  return Token ? (
+  return props.Token ? (
     <React.Fragment>
       <div className="home">
         <div
@@ -36,22 +30,26 @@ function Home() {
           <i className="fa-solid fa-bars"></i>
         </div>
 
-        <Sidebar active={active} SetToken={SetToken} Token={Token} />
+        <Sidebar
+          active={active}
+          SetToken={props.SetToken}
+          Token={props.Token}
+        />
         <div className={`content ${active}`}>
           <Suspense fallback={<div>Loading...</div>}>
             <Routes>
-              <Route path="/" element={<Library Token={Token} />} />
-              <Route path="/Feed" element={<Feed Token={Token} />} />
-              <Route path="/Trending" element={<Trending Token={Token} />} />
-              <Route path="/Player" element={<MusicPlayer Token={Token} />} />
-              <Route path="/Favorites" element={<Favorites Token={Token} />} />
+              <Route path="/" element={<Library />} />
+              <Route path="/Feed" element={<Feed />} />
+              <Route path="/Trending" element={<Trending />} />
+              <Route path="/Player/:id?" element={<MusicPlayer />} />
+              <Route path="/Favorites" element={<Favorites />} />
             </Routes>
           </Suspense>
         </div>
       </div>
     </React.Fragment>
   ) : (
-    <Login />
+    <Login SetToken={props.SetToken} />
   );
 }
 export default Home;

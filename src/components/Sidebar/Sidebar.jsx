@@ -3,35 +3,21 @@ import "./Sidebar.css";
 import { Link, NavLink } from "react-router-dom";
 import { MdOutlineSpaceDashboard } from "react-icons/md";
 import { IoLibrarySharp } from "react-icons/io5";
-import axios from "axios";
 
 function Sidebar(props) {
-  const [img, SetImg] = useState(require("../../assets/img/avatar.jpg"));
-
-  useEffect(() => {
-    const GetUSer = async () => {
-      if (props.Token) {
-        await axios
-          .get("https://api.spotify.com/v1/me", {
-            headers: {
-              Authorization: "Bearer " + props.Token,
-            },
-          })
-          .then((data) => SetImg(data.data.images[0].url));
-      }
-    };
-    GetUSer();
-  }, [props.Token]);
+  useEffect(() => {}, [props.Token]);
 
   const HandleLogout = () => {
     localStorage.clear();
-    props.SetToken("");
+    console.log(props.Token);
+    props.SetToken(false);
   };
+
   return (
     <React.Fragment>
       <div className={`Sidebar ${props.active}`}>
         <div className="avatar">
-          <img src={img} alt="avatar" />
+          <img src={require("../../assets/img/avatar.jpg")} alt="avatar" />
         </div>
         <ul className="navigators">
           <li>

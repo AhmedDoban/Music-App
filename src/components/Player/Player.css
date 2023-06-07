@@ -1,13 +1,14 @@
-/**************************************************
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # root
-***************************************************/
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
 @import url("./../../assets/css/root.css");
-/**************************************************
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # MusicPlayer
-***************************************************/
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
 .MusicPlayer {
   position: relative;
   display: flex;
+  gap: 20px;
   width: 100%;
   height: 100%;
 }
@@ -16,17 +17,227 @@
     flex-direction: column;
   }
 }
-/**************************************************
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # MusicPlayer left
-***************************************************/
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
 .MusicPlayer .left {
   position: relative;
   width: 75%;
+  display: flex;
+  flex-direction: column;
+}
+.MusicPlayer .left .top {
+  display: flex;
+}
+.MusicPlayer .left .bottom {
+  position: relative;
+  width: 100%;
+}
+@media (max-width: 1020px) {
+  .MusicPlayer .left {
+    max-width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+  .MusicPlayer .left .top {
+    flex-direction: column;
+  }
+}
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+# MusicPlayer left CircularProgressbar
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
+.MusicPlayer .left .CircularProgressbar {
+  width: 250px;
+  height: 250px;
+  z-index: 2222;
+}
+.MusicPlayer .left path.CircularProgressbar-trail {
+  stroke: #3b4f73 !important;
+  stroke-width: 3;
+}
+.MusicPlayer .left path.CircularProgressbar-path {
+  stroke: #c96850 !important;
+  stroke-width: 4;
+  transition: var(--main-transition);
+  animation: fill-path 3s ease-in alternate;
+}
+.MusicPlayer .left .CircularProgressbar .data {
+  position: absolute;
+  top: 48%;
+  left: 50%;
+  border-radius: 50%;
+  width: calc(100% - 45px);
+  height: calc(100% - 45px);
+  transform: translate(-50%, -50%);
+}
+.MusicPlayer .left .CircularProgressbar .data img {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.MusicPlayer .left .CircularProgressbar .data img:nth-child(2) {
+  position: absolute;
+  width: 85px;
+  height: 85px;
+  object-fit: cover;
+  top: 28.5%;
+  left: 28.5%;
+  border-radius: 50%;
+}
+.MusicPlayer .left .CircularProgressbar .data img.active {
+  animation: loop 5s linear infinite;
+  transform-origin: center center;
+}
+@keyframes loop {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
+# MusicPlayer left Song-body
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
+.MusicPlayer .left .Song-body {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: fit-content;
+  padding: 20px;
+  gap: 20px;
+}
+.MusicPlayer .left .Song-body .titel {
+  text-align: center;
+  font-size: 50px;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin: 0px;
+  color: #c4d0e3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-clamp: 2;
+}
+.MusicPlayer .left .Song-body .artists {
+  color: #9aa9c2;
+  font-size: 18px;
+  font-weight: 500;
+}
+.MusicPlayer .left .Song-body .song-duration {
+  position: relative;
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@media (max-width: 1020px) {
+  .MusicPlayer .left .Song-body .song-duration {
+    width: 100%;
+  }
+}
+.MusicPlayer .left .Song-body .song-duration .duration {
+  font-size: 20px;
+  font-weight: 700;
+  color: #c4d0e3;
+}
+.MusicPlayer .left .Song-body .wave {
+  display: flex;
+  justify-content: space-between;
+  height: 54px;
+  --boxSize: 4px;
+  --gutter: 8px;
+  width: calc((var(--boxSize) + var(--gutter)) * 13);
 }
 
-/**************************************************
+.MusicPlayer .left .Song-body .wave .box {
+  transform: scale(0.4);
+  height: 100%;
+  width: var(--boxSize);
+  background: linear-gradient(40deg, #364562 20%, #c96850 100%) no-repeat;
+  border-radius: 18px;
+}
+
+.MusicPlayer .left .Song-body .wave .box.active {
+  animation-duration: 1.2s;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+.MusicPlayer .left .Song-body .wave .box:nth-child(1) {
+  animation-name: quiet;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(2) {
+  animation-name: normal;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(3) {
+  animation-name: quiet;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(4) {
+  animation-name: loud;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(5) {
+  animation-name: quiet;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(6) {
+  animation-name: loud;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(7) {
+  animation-name: quiet;
+}
+
+.MusicPlayer .left .Song-body .wave .box:nth-child(8) {
+  animation-name: quiet;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(9) {
+  animation-name: loud;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(10) {
+  animation-name: normal;
+}
+.MusicPlayer .left .Song-body .wave .box:nth-child(11) {
+  animation-name: quiet;
+}
+@keyframes quiet {
+  25% {
+    transform: scale(0.6);
+  }
+  50% {
+    transform: scale(0.4);
+  }
+  75% {
+    transform: scale(0.8);
+  }
+}
+
+@keyframes normal {
+  25% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.4);
+  }
+  75% {
+    transform: scale(0.6);
+  }
+}
+
+@keyframes loud {
+  25% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.4);
+  }
+  75% {
+    transform: scale(1.2);
+  }
+}
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # MusicPlayer right 
-***************************************************/
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
 .MusicPlayer .right {
   width: 25%;
   position: relative;
@@ -38,11 +249,47 @@
   .MusicPlayer .left,
   .MusicPlayer .right {
     width: 100%;
+    flex-direction: column;
   }
 }
-/**************************************************
+
+.rangeStyle {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  height: 6px;
+  background: #ccc;
+  margin-top: 30px;
+  transition: var(--main-transition);
+}
+
+.rangeStyle::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 15px;
+  width: 15px;
+  background-color: #f50;
+  border-radius: 50%;
+  border: none;
+  transition: 0.2s ease-in-out;
+}
+
+.rangeStyle::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 10px rgba(255, 85, 0, 0.1);
+}
+.rangeStyle:active::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(255, 85, 0, 0.2);
+}
+.rangeStyle:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 13px rgba(255, 85, 0, 0.2);
+}
+
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # MusicPlayer right SongCard
-***************************************************/
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
 .MusicPlayer .right .SongCard {
   position: relative;
   width: 100%;
@@ -79,7 +326,7 @@
 }
 .MusicPlayer .right .SongCard .data {
   position: relative;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -87,7 +334,6 @@
   overflow: hidden;
 }
 .MusicPlayer .right .SongCard .data .titel {
-  width: 500px;
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
@@ -98,7 +344,6 @@
 .MusicPlayer .right .SongCard .data .titel h5 {
   position: relative;
   width: 100%;
-  padding: 10px 0;
   font-size: 16px;
   font-weight: 800;
   letter-spacing: 2px;
@@ -128,9 +373,9 @@
 .MusicPlayer .right .SongCard .data p.release_date {
   font-size: 12px;
 }
-/**************************************************
+/*ــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ
 # MusicPlayer right Queue
-***************************************************/
+ـــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــــ*/
 .MusicPlayer .right .Queue {
   position: relative;
   width: 100%;
@@ -190,6 +435,7 @@
   border-radius: calc(var(--main-border-radius) / 4);
   padding: 5px;
 }
-.MusicPlayer .right .Queue .Queue-list p:hover {
+.MusicPlayer .right .Queue .Queue-list p:hover,
+.MusicPlayer .right .Queue .Queue-list p.active {
   background-color: rgba(240, 248, 255, 0.1);
 }
