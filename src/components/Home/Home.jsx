@@ -4,11 +4,11 @@ import { Route, Routes } from "react-router-dom";
 
 import Login from "../Login/Login";
 import Sidebar from "../Sidebar/Sidebar";
-const Library = lazy(() => import("./../Library/Library"));
-const Feed = lazy(() => import("./../Feed/Feed"));
-const Trending = lazy(() => import("./../Trending/Trending"));
-const MusicPlayer = lazy(() => import("./../Player/Player"));
-const Favorites = lazy(() => import("./../Favorites/Favorites"));
+const Library = lazy(() => import("../Library/Library"));
+const Feed = lazy(() => import("../Feed/Feed"));
+const Trending = lazy(() => import("../Trending/Trending"));
+const MusicPlayer = lazy(() => import("../Player/Player"));
+const Favorites = lazy(() => import("../Favorites/Favorites"));
 
 function Home(props) {
   const [active, SetActive] = useState("");
